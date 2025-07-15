@@ -3,6 +3,7 @@ version: "3.8"
 services:
   db:
     image: mysql:5.7
+    container_name: aurore-ecommerce-backend-db-1
     environment:
       MYSQL_DATABASE: wpdb
       MYSQL_USER: wpuser
@@ -13,6 +14,7 @@ services:
 
   wordpress:
     image: wordpress:latest
+    container_name: aurore-ecommerce-backend-wordpress-1
     depends_on:
       - db
     environment:
@@ -22,4 +24,5 @@ services:
       WORDPRESS_DB_NAME: wpdb
     volumes:
       - ./wp-content:/var/www/html/wp-content
-    # Bỏ ports để Railway tự xử lý
+    ports:
+      - 8000:80
