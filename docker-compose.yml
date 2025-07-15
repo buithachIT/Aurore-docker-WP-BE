@@ -4,7 +4,7 @@ services:
   wordpress:
     image: wordpress:latest
     ports:
-      - "8000:80"
+      - "8000:80" # Railway sẽ dùng port 80 thôi, nhưng giữ 8000 để test local
     restart: always
     environment:
       WORDPRESS_DB_HOST: db:3306
@@ -24,6 +24,7 @@ services:
       MYSQL_ROOT_PASSWORD: rootpass
     volumes:
       - db_data:/var/lib/mysql
+      - ./db-init:/docker-entrypoint-initdb.d # 👉 Add dòng này
 
 volumes:
   db_data:
