@@ -1,11 +1,20 @@
 version: "3.8"
 
 services:
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_DATABASE: wpdb
+      MYSQL_USER: wpuser
+      MYSQL_PASSWORD: wppass
+      MYSQL_ROOT_PASSWORD: rootpass
+    volumes:
+      - ./db-init:/docker-entrypoint-initdb.d
+
   wordpress:
     image: wordpress:latest
-    ports:
-      - "8000:80" # Railway sẽ dùng port 80 thôi, nhưng giữ 8000 để test local
-    restart: always
+    depends_on:
+      - db
     environment:
       WORDPRESS_DB_HOST: db:3306
       WORDPRESS_DB_USER: wpuser
@@ -13,18 +22,4 @@ services:
       WORDPRESS_DB_NAME: wpdb
     volumes:
       - ./wp-content:/var/www/html/wp-content
-
-  db:
-    image: mysql:5.7
-    restart: always
-    environment:
-      MYSQL_DATABASE: wpdb
-      MYSQL_USER: wpuser
-      MYSQL_PASSWORD: wppass
-      MYSQL_ROOT_PASSWORD: rootpass
-    volumes:
-      - db_data:/var/lib/mysql
-      - ./db-init:/docker-entrypoint-initdb.d # 👉 Add dòng này
-
-volumes:
-  db_data:
+    # Bỏ ports để Railway tự xử lý
