@@ -15,13 +15,11 @@ services:
   wordpress:
     image: wordpress:latest
     container_name: aurore-ecommerce-backend-wordpress-1
-    depends_on:
-      - db
     environment:
-      WORDPRESS_DB_HOST: db:3306
-      WORDPRESS_DB_USER: wpuser
-      WORDPRESS_DB_PASSWORD: wppass
-      WORDPRESS_DB_NAME: wpdb
+      WORDPRESS_DB_HOST: metro.proxy.rlwy.net:43908 # hostname + port DB Railway
+      WORDPRESS_DB_USER: root # user DB Railway
+      WORDPRESS_DB_PASSWORD: lbOfNMxViBHlGKZfcqwCOZZpIqbeVhGD # password DB Railway
+      WORDPRESS_DB_NAME: railway # database name Railway
     volumes:
       - ./wp-content:/var/www/html/wp-content
     ports:
